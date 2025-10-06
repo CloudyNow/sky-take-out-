@@ -13,5 +13,4 @@ public class AliOssProperties {
     private String accessKeyId;
     private String accessKeySecret;
     private String bucketName;
-
 }

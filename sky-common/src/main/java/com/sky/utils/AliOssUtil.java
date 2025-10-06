@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import java.io.ByteArrayInputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -23,13 +26,21 @@ public class AliOssUtil {
      * 文件上传
      *
      * @param bytes
-     * @param objectName
+     * @param originalFilename
      * @return
      */
-    public String upload(byte[] bytes, String objectName) {
+    public String upload(byte[] bytes, String originalFilename) {
 
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+
+        // 填写Object完整路径，例如202406/1.png。Object完整路径中不能包含Bucket名称。
+        //获取当前系统日期的字符串,格式为 yyyy/MM
+        String dir = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM"));
+        //生成一个新的不重复的文件名
+        String newFileName = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
+        String objectName = dir + "/" + newFileName;
+        log.info(endpoint);
 
         try {
             // 创建PutObject请求。
@@ -63,6 +74,6 @@ public class AliOssUtil {
 
         log.info("文件上传到:{}", stringBuilder.toString());
 
-        return stringBuilder.toString();
+        return endpoint.split("//")[0] + "//" + bucketName + "." + endpoint.split("//")[1] + "/" + objectName;
     }
 }

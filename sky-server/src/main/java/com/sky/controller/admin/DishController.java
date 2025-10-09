@@ -2,6 +2,8 @@ package com.sky.controller.admin;
 
 
 import com.sky.dto.DishDTO;
+import com.sky.dto.DishPageQueryDTO;
+import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +21,11 @@ public class DishController {
     @Autowired
     private DishService dishService;
 
+    /**
+     * 新增菜品
+     * @param dishDTO
+     * @return
+     */
     @RequestMapping()
     @ApiOperation("保存菜品")
     public Result<String> save(@RequestBody DishDTO dishDTO){
@@ -26,4 +33,13 @@ public class DishController {
         dishService.saveWithFlavor(dishDTO);
         return Result.success();
     }
+
+    @RequestMapping("page")
+    @ApiOperation("菜品分页查询")
+    public Result<PageResult> page(DishPageQueryDTO dishPageQueryDTO){
+        log.info("菜品分页查询：{}", dishPageQueryDTO);
+        PageResult pageResult = dishService.page(dishPageQueryDTO);
+        return Result.success(pageResult);
+    }
+
 }

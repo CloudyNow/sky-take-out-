@@ -15,4 +15,18 @@
             (#{df.dishId},#{df.name},#{df.value})
         </foreach>
     </insert>
+    <select id="pageQuery" resultType="com.sky.vo.DishVO">
+        select d.*,C.name  categoryName from dish d left join category c on d.category_id = c.id
+        <where>
+            <if test="name != null and name != ''">
+                and d.name like concat('%',#{name},'%')
+            </if>
+            <if test="status != null">
+                and d.status = #{status}
+            </if>
+            <if test="categoryId != null">
+                and d.category_id = #{categoryId}
+            </if>
+        </where>
+    </select>
 </mapper>

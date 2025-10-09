@@ -15,6 +15,51 @@
             (#{df.dishId},#{df.name},#{df.value})
         </foreach>
     </insert>
+    <update id="update">
+        update dish
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="image != null">
+                image = #{image},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteByIds">
+        delete from dish where id in
+        <foreach item="id" collection="list" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteFlavorByDishIds">
+        delete from dish_flavor where dish_id in
+        <foreach item="id" collection="list" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
     <select id="pageQuery" resultType="com.sky.vo.DishVO">
         select d.*,C.name  categoryName from dish d left join category c on d.category_id = c.id
         <where>
@@ -28,5 +73,6 @@
                 and d.category_id = #{categoryId}
             </if>
         </where>
+        order by d.update_time desc
     </select>
 </mapper>

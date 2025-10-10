@@ -3,10 +3,12 @@ package com.sky.controller.admin;
 
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("admin/dish")
 @Slf4j
+@Api(tags = "菜品相关接口")
 public class DishController {
 
     @Autowired
@@ -72,6 +75,11 @@ public class DishController {
         DishVO dishVO = dishService.getByIdWithFlavor(id);
         return Result.success(dishVO);
     }
+    /**
+     * 修改菜品数据
+     * @param dishDTO
+     * @return
+     */
     @PutMapping
     @ApiOperation("修改菜品数据")
     public Result update(@RequestBody DishDTO dishDTO){
@@ -79,5 +87,22 @@ public class DishController {
         dishService.updateWithFlavor(dishDTO);
         return Result.success();
     }
+    /**
+     * 根据分类id查询菜品数据
+     */
+    @GetMapping("list")
+    @ApiOperation("根据分类id查询菜品数据")
+    public Result<List<Dish>> list(Long categoryId){
+        log.info("根据分类id查询菜品数据：{}", categoryId);
+        List<Dish> list = dishService.getByCategoryId(categoryId);
+        return Result.success(list);
+    }
+    /**
+     * 菜品起售停售
+     * @param status
+     * @param id
+     * @return
+     */
+
 
 }

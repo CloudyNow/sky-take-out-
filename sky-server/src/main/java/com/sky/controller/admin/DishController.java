@@ -32,7 +32,8 @@ public class DishController {
      */
     @RequestMapping()
     @ApiOperation("保存菜品")
-    public Result<String> save(@RequestBody DishDTO dishDTO){
+    public Result<String>
+    save(@RequestBody DishDTO dishDTO){
         log.info("保存菜品：{}", dishDTO);
         dishService.saveWithFlavor(dishDTO);
         return Result.success();
@@ -97,12 +98,5 @@ public class DishController {
         List<Dish> list = dishService.getByCategoryId(categoryId);
         return Result.success(list);
     }
-    /**
-     * 菜品起售停售
-     * @param status
-     * @param id
-     * @return
-     */
-
 
 }

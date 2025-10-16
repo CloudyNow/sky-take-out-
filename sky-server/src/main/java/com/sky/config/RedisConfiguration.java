@@ -14,7 +14,7 @@ public class RedisConfiguration {
     @Bean
     public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory){
         RedisTemplate redisTemplate = new RedisTemplate();
-        //设置redis的链接工厂桂香
+        //设置redis的链接工厂
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         //设置redis的key序列化器
         redisTemplate.setKeySerializer(new StringRedisSerializer());

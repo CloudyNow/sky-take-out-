@@ -30,10 +30,9 @@ public class DishController {
      * @param dishDTO
      * @return
      */
-    @RequestMapping()
+    @PostMapping()
     @ApiOperation("保存菜品")
-    public Result<String>
-    save(@RequestBody DishDTO dishDTO){
+    public Result<String> save(@RequestBody DishDTO dishDTO){
         log.info("保存菜品：{}", dishDTO);
         dishService.saveWithFlavor(dishDTO);
         return Result.success();
@@ -44,7 +43,7 @@ public class DishController {
      * @param dishPageQueryDTO
      * @return
      */
-    @RequestMapping("page")
+    @GetMapping("page")
     @ApiOperation("菜品分页查询")
     public Result<PageResult> page(DishPageQueryDTO dishPageQueryDTO){
         log.info("菜品分页查询：{}", dishPageQueryDTO);

@@ -34,4 +34,19 @@ public interface ShoppingMapper {
             " values (#{name},#{userId},#{dishId},#{setmealId},#{dishFlavor},#{number},#{amount},#{image},#{createTime})")
     void insert(ShoppingCart shoppingCart);
 
+    /**
+     * 根据用户id删除购物车数据
+     *
+     * @param currentId
+     */
+    @Delete("delete from shopping_cart where user_id = #{currentId}")
+    void deleteByUserId(Long currentId);
+
+    /**
+     * 根据id删除购物车数据
+     *
+     * @param id
+     */
+    @Delete("delete from shopping_cart where id = #{id}")
+    void deleteById(Long id);
 }

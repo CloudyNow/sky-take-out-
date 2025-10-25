@@ -118,4 +118,17 @@ public class OderController {
         return Result.success();
     }
 
+    /**
+     * 催单
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/reminder/{id}")
+    @ApiOperation("提醒")
+    public  Result reminder(@PathVariable("id") Long id){
+        orderService.reminder(id);
+        return Result.success();
+    }
+
 }
